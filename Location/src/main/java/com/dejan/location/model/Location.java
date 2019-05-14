@@ -3,7 +3,7 @@ package com.dejan.location.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity		//mapping to db table location
+@Entity		//mapping to data base table location
 public class Location {
 
 	//creating fields according to data base location
