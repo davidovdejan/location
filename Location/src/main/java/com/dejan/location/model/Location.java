@@ -11,7 +11,7 @@ public class Location {
 	private int id;
 	private String code;
 	private String name;
-	private String type;
+private String type;
 
 	//generate getters and setters
 	public int getId() {
