@@ -13,7 +13,7 @@ public interface LocationService {
 
 	void deleteLocation(Location location);
 
-	Optional<Location> getLocationById(int id);
+	Location getLocationById(int id);
 	
 	List<Location> getAllLocations();
 }
