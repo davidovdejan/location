@@ -1,5 +1,6 @@
 package com.dejan.location.controller;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +29,37 @@ public class LocationController {
 
 	@RequestMapping("saveLoc")
 	public String saveLocation(@ModelAttribute("location") Location location, ModelMap modelMap) {
-		Location locationSaved = service.saveLocation(location);
-		String msg = "Location saved with id:" + locationSaved.getId();
-		modelMap.addAttribute("msg", msg);
+
+		List<Location> locations = service.getAllLocations();
+		if (locations.isEmpty()) {
+			service.saveLocation(location);
+			Location locationSaved = service.saveLocation(location);
+			String msg = "Location saved with id:" + locationSaved.getId();
+			modelMap.addAttribute("msg", msg);
+
+		} else {
+//			Iterator<Location> it = locations.iterator();
+//			while (it.hasNext()) {
+//				if (it.next().getId() != location.getId()) {
+//					System.out.println("Deja");
+//					Location locationSaved = service.saveLocation(location);
+//					String msg = "Location saved with id:" + locationSaved.getId();
+//					modelMap.addAttribute("msg", msg);
+//				}
+//			}
+
+			// iteracija kroz kolekciju pomocu stream
+			locations.stream().filter(p -> p.getId() != location.getId()).map(pm -> service.saveLocation(location))
+					.forEach(m -> {
+						Location locationSaved = service.saveLocation(location);
+						String msg = "Location saved with id:" + locationSaved.getId();
+						modelMap.addAttribute("msg", msg);
+					});
+			;
+//			Location locationSaved = service.saveLocation(location);
+//			String msg = "Location saved with id:" + locationSaved.getId();
+//			modelMap.addAttribute("msg", msg);
+		}
 		return "createLocation";
 	}
 
@@ -45,7 +74,7 @@ public class LocationController {
 	public String deleteLocation(@RequestParam("id") int id, ModelMap modelMap) {
 		Location location = service.getLocationById(id);
 		service.deleteLocation(location);
-		service.getAllLocations();
+//		service.getAllLocations();
 		List<Location> locations = service.getAllLocations();
 		modelMap.addAttribute("locations", locations);
 		return "displayLocations";
