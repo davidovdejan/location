@@ -55,7 +55,7 @@ public class LocationController {
 						String msg = "Location saved with id:" + locationSaved.getId();
 						modelMap.addAttribute("msg", msg);
 					});
-			;
+			
 //			Location locationSaved = service.saveLocation(location);
 //			String msg = "Location saved with id:" + locationSaved.getId();
 //			modelMap.addAttribute("msg", msg);
